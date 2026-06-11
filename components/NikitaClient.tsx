@@ -19,7 +19,7 @@ export function NikitaClient({ songs }: NikitaClientProps) {
   };
 
   return (
-    <div className="relative h-dvh w-screen overflow-y-auto bg-[#050505]">
+    <div className="snap-container relative h-dvh w-screen overflow-y-auto bg-[#050505]">
       <Particles />
 
       {/* Sleek fixed header with glassy effect */}
@@ -29,7 +29,7 @@ export function NikitaClient({ songs }: NikitaClientProps) {
         <div>NIKIT A</div>
       </div>
 
-      <motion.div layout className="snap-container pt-16">
+      <motion.div layout className="pt-16">
         {songs.map((item, index) => (
           <Letter
             key={item.letter}

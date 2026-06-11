@@ -54,10 +54,14 @@ html, body {
   transform: scale(1);
 }
 
-/* Premium Typography for JOSEPHINE / NIKITA - Cinematic for letters, modern for text */
+/* Premium Typography - Playfair Display (cinematic, scales beautifully at large sizes) for letters, Inter for text */
 .letter {
-  font-family: var(--font-cinzel);
-  font-size: clamp(5rem, 26vw, 9rem);
+  font-family: var(--font-playfair);
+  /* High-res rendering trick: render glyphs at 1.5x size, scale back visually.
+     This forces the browser to rasterize at higher resolution, preventing "enlarged from low-res" blurry look at huge sizes. */
+  font-size: calc(clamp(5rem, 26vw, 9rem) * 1.5);
+  transform: scale(0.6667) translateZ(0);
+  transform-origin: center;
   font-weight: 700;
   letter-spacing: -0.06em;
   line-height: 0.7;
@@ -65,16 +69,23 @@ html, body {
   text-shadow: 0 10px 30px rgba(0,0,0,0.6);
   transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
   user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-smooth: always;
+  will-change: transform;
 }
 
 .letter:active {
-  transform: scale(0.96);
+  transform: scale(0.96 * 0.6667) translateZ(0);
 }
 
 .expanded-text {
   font-family: var(--font-inter);
   font-size: 1rem;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Crisp high-quality rendering for images and transforms to fix low-res feel */

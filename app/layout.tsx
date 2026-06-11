@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Cinzel, Inter, Outfit } from "next/font/google";
+import { Playfair_Display, Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 
-// Cinematic, elegant font for the main N-I-K-I-T-A letters (cinematic weight)
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
+// Cinematic, elegant variable font for the main N-I-K-I-T-A letters (cinematic weight, great for large sizes)
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "900"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -51,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cinzel.variable} ${inter.variable} ${outfit.variable} h-dvh w-screen overflow-hidden antialiased dark`}
+      className={`${playfair.variable} ${inter.variable} ${outfit.variable} h-dvh w-screen overflow-hidden antialiased dark`}
     >
       <body className="h-dvh w-screen overflow-hidden bg-[#050505] text-white">
         {children}
