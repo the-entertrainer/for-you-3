@@ -50,8 +50,8 @@ export function SongWidget({ song, artworkUrl, webUrl, songId }: SongWidgetProps
 
         <div className="flex items-center justify-between">
           <div>
-            <div className="font-mono text-[10px] tracking-[3px] text-white/50">JIOSAAVN</div>
-            <div className="text-lg font-semibold leading-none tracking-[-0.4px] text-white">
+            <div className="label text-[10px] tracking-[3.5px] text-white/50 uppercase">JIOSAAVN</div>
+            <div className="song-title text-xl font-semibold leading-none tracking-[-0.45px] text-white mt-0.5">
               {song}
             </div>
           </div>

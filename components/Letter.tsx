@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SongWidget } from "@/components/SongWidget";
 import type { EnhancedNikitaItem } from "@/types";
@@ -22,11 +22,33 @@ const LIQUID_SPRING = {
 export function Letter({ item, index, isExpanded, onToggle }: LetterProps) {
   // Local state strictly initialized to false for independence
   const [localExpanded, setLocalExpanded] = useState(false);
+  const letterRef = useRef<HTMLButtonElement>(null);
 
   // Sync with parent accordion state
   useEffect(() => {
     setLocalExpanded(isExpanded);
   }, [isExpanded]);
+
+  // Dynamic font-variation reacting to scroll (width + optical size for modern reactive typography)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!letterRef.current) return;
+      const scrollY = window.scrollY;
+      const sectionTop = letterRef.current.getBoundingClientRect().top + window.scrollY;
+      const distance = Math.abs(scrollY - sectionTop);
+      const intensity = Math.max(0, Math.min(1, distance / 300));
+      
+      // Subtle variation: compress width and adjust optical size based on scroll distance
+      const wdth = 100 - intensity * 8;
+      const opsz = 80 - intensity * 12;
+      letterRef.current.style.fontVariationSettings = `"wght" 700, "wdth" ${wdth}, "opsz" ${opsz}`;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // initial
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleTap = () => {
     // Haptic feedback on supported devices
@@ -64,9 +86,10 @@ export function Letter({ item, index, isExpanded, onToggle }: LetterProps) {
                 <div className="glowing-border" />
 
                 <div className="relative z-10">
-                  <p className="expanded-text text-[15px] leading-relaxed text-white/90 tracking-[-0.2px]">
-                    {item.phrase}
-                  </p>
+                  <p 
+                    className="expanded-text text-fluid-lg text-white/90 tracking-[-0.015em] mb-1"
+                    dangerouslySetInnerHTML={{ __html: item.phrase }}
+                  />
 
                   {/* Immersive JioSaavn Widget with Vinyl Effect */}
                   <div className="mt-6">

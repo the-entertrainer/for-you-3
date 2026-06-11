@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Cinzel, Inter, Outfit } from "next/font/google";
+import { Playfair_Display, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
+// Elegant, cinematic variable display font for the main N-I-K-I-T-A letters
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "900"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
+// Modern, highly legible variable sans for body and expanded text
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -17,8 +20,9 @@ const inter = Inter({
   display: "swap",
 });
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+// Modern geometric variable sans for labels, emphasis and UI elements (reactive feel)
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -48,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cinzel.variable} ${inter.variable} ${outfit.variable} h-dvh w-screen overflow-hidden antialiased dark`}
+      className={`${playfair.variable} ${inter.variable} ${spaceGrotesk.variable} h-dvh w-screen overflow-hidden antialiased dark`}
     >
       <body className="h-dvh w-screen overflow-hidden bg-[#050505] text-white">
         {children}

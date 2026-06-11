@@ -59,25 +59,88 @@ html, body {
   50% { background-position: 100% 50%; }
 }
 
-/* Premium Typography */
+/* Premium Modern Typography with Reactive Variable Fonts */
 .letter {
-  font-family: var(--font-cinzel);
-  font-size: clamp(5.5rem, 26vw, 9rem);
-  font-weight: 600;
-  letter-spacing: -0.06em;
-  line-height: 0.75;
+  font-family: var(--font-playfair);
+  font-size: clamp(4.8rem, 24vw, 8.5rem);
+  font-weight: 700;
+  letter-spacing: -0.065em;
+  line-height: 0.72;
   color: #f5f5f7;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.6);
-  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  text-shadow: 0 12px 40px rgba(0, 0, 0, 0.65);
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), 
+              font-variation-settings 0.4s ease;
   user-select: none;
+  font-feature-settings: "kern" on, "liga" on, "tnum" on;
 }
 
-.letter:active {
-  transform: scale(0.96);
+/* Reactive: Dynamic font-variation (weight, width, optical size) reacting to interaction, expansion and scroll */
+.letter:active,
+.letter-section:has(.glass) .letter {
+  transform: scale(0.97);
+  font-variation-settings: "wght" 780, "wdth" 105, "opsz" 85;
+}
+
+/* Subtle scroll-reactive font variation (applied via JS on .letter) */
+.letter.scroll-reactive {
+  font-variation-settings: "wght" 720, "wdth" 98, "opsz" 72;
 }
 
 .expanded-text {
   font-family: var(--font-inter);
+  font-feature-settings: "kern" on, "liga" on, "tnum" on;
+  font-size: clamp(0.98rem, 3.8vw, 1.15rem);
+  line-height: 1.55;
+  letter-spacing: -0.008em;
+}
+
+/* Modern geometric font for labels and emphasis (Space Grotesk for reactive modern feel) */
+.label,
+.song-title,
+.emphasis {
+  font-family: var(--font-space-grotesk);
+  font-feature-settings: "kern" on, "tnum" on;
+  letter-spacing: 0.065em;
+}
+
+/* Refined fixed header typography */
+.snap-container .label {
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Strong emphasis styling */
+strong, .strong {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f5f5f7;
+}
+
+em, .italic {
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Serif emphasis treatment for romantic phrases (Playfair for elegant, classic feel) */
+.serif-em {
+  font-family: var(--font-playfair);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+  color: #f0e6ff; /* subtle lift */
+}
+
+/* Fluid typography helpers */
+.text-fluid-lg {
+  font-size: clamp(1.1rem, 4.2vw, 1.35rem);
+  line-height: 1.35;
+}
+
+.text-fluid-md {
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  line-height: 1.45;
 }
 
 /* Liquid Glass Card */
@@ -105,6 +168,34 @@ html, body {
   );
   pointer-events: none;
   z-index: 1;
+}
+
+/* Enhanced typography inside glass cards for better visual hierarchy */
+.glass p {
+  font-feature-settings: "kern" on, "liga" on;
+}
+
+.glass .label {
+  font-family: var(--font-space-grotesk);
+  letter-spacing: 0.08em;
+}
+
+/* Subtle font animation on card open (reactive typography pop) */
+.glass.expanded p {
+  animation: font-open-pop 650ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes font-open-pop {
+  from {
+    font-variation-settings: "wght" 400, "wdth" 95;
+    letter-spacing: -0.03em;
+    opacity: 0.6;
+  }
+  to {
+    font-variation-settings: "wght" 500, "wdth" 100;
+    letter-spacing: -0.015em;
+    opacity: 1;
+  }
 }
 
 /* Glowing tracing border on expansion */
