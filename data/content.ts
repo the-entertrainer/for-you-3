@@ -3,72 +3,52 @@ export interface NikitaItem {
   phrase: string;
   song: string;
   url: string;
-  // For maximum immersion we use direct high-quality artwork (in production this would be resolved via JioSaavn API)
-  artwork: string;
 }
 
 export const NIKITA: NikitaItem[] = [
   {
     letter: "N",
-    phrase: "N stands for Nainowale Ne. You bring so much music into my life.",
+    phrase: "N stands for Naughty. For my naughty little baby, here is a song.",
     song: "Nainowale Ne",
-    url: "https://www.jiosaavn.com/song/nainowale-ne-from-padmaavat-lyrics/Gl8abjFReF8",
-    artwork: "https://c.saavncdn.com/191/Nainowale-Ne-From-Padmaavat--Hindi-2018-20180122-500x500.jpg"
+    url: "https://www.jiosaavn.com/s/song/hindi/padmaavat/nainowale-ne/JzE9ASNHBFE",
   },
   {
     letter: "I",
-    phrase: "I stands for Inkem Inkem. You are my world, my love.",
-    song: "Inkem Inkem Inkem Kaavale",
-    url: "https://www.jiosaavn.com/song/inkem-inkem-inkem-kaavaale-from-geetha-govindam-/OytZaTVATlI",
-    artwork: "https://c.saavncdn.com/124/Inkem-Inkem-Inkem-Kaavaale-From-Geetha-Govindam--Telugu-2018-20180709-500x500.jpg"
+    phrase: "I stands for Irresistible. You are my world, my love.",
+    song: "Inkem Inkem Inkem Kaavaale",
+    url: "https://www.jiosaavn.com/p/song/search/Geetha-Govindam/Inkem-Inkem-Inkem-Kaavaale/GCEmUCJFe0k",
   },
   {
     letter: "K",
-    phrase: "K stands for Kya Khoob Lagti Ho. You look beautiful in everything you do.",
+    phrase: "K stands for Khubsoorat. You look beautiful in everything you do.",
     song: "Kya Khoob Lagti Ho",
-    url: "https://www.jiosaavn.com/song/kya-khoob-lagti-ho/QxgyQExpAUU",
-    artwork: "https://c.saavncdn.com/143/Kya-Khoob-Lagti-Ho--Hindi-2018-20180205-500x500.jpg"
+    url: "https://www.jiosaavn.com/p/song/search/Dharmatma/Kya-Khoob-Lagti-Ho/NQcKSEB7dQI",
   },
   {
     letter: "I",
     phrase: "I stands for Intense. You are so intense when we make love.",
     song: "In My Bed",
-    url: "https://www.jiosaavn.com/lyrics/in-my-bed-lyrics/Qxxdchx8W34",
-    artwork: "https://c.saavncdn.com/191/Nainowale-Ne-From-Padmaavat--Hindi-2018-20180122-500x500.jpg" // Using similar rich tone for the "In My Bed" intense vibe (real resolver recommended)
+    url: "https://www.jiosaavn.com/p/song/search/The-Beauty-of-Becoming/In-My-Bed/GAMJeytKYwQ",
   },
   {
     letter: "T",
-    phrase: "T stands for Tum Se Hi. Everything starts and ends with you.",
+    phrase: "T stands for Timeless. Everything starts and ends with you.",
     song: "Tum Se Hi",
-    url: "https://www.jiosaavn.com/song/tum-se-hi-from-jab-we-met/Bg84RxFnAXg",
-    artwork: "https://c.saavncdn.com/033/Tum-Se-Hi-From-Jab-We-Met--Hindi-2007-500x500.jpg"
+    url: "https://www.jiosaavn.com/p/song/search/Jab-We-Met/Tum-Se-Hi/CiE7ejcIZ3g",
   },
   {
     letter: "A",
-    phrase: "A stands for Adiye. Adorable and mesmerizing, my favorite rhythm.",
-    song: "Adiye (from movie: Bachelor)",
-    url: "https://www.jiosaavn.com/song/adiye/FSQGHD5GfAc",
-    artwork: "https://c.saavncdn.com/191/Adiye-From-Bachelor--Tamil-2021-20210929-500x500.jpg"
+    phrase: "A stands for Adorable. Just like your smile.",
+    song: "Adiye",
+    url: "https://www.jiosaavn.com/p/song/search/Bachelor-Original-Motion-Picture-Soundtrack/Adiye/FSQGHD5GfAc",
   },
 ];
 
-// Helper: extract a usable song token/ID from the JioSaavn web URL for deep linking
 export function getSongIdFromUrl(url: string): string {
   try {
     const parts = url.split("/").filter(Boolean);
-    const last = parts[parts.length - 1];
-    // Many JioSaavn deep links accept the trailing token (e.g. Gl8abjFReF8)
-    return last.replace(/[^A-Za-z0-9]/g, "");
+    return parts[parts.length - 1] || "";
   } catch {
     return "";
   }
 }
-
-export const LIQUID_SPRING = {
-  type: "spring" as const,
-  stiffness: 88,
-  damping: 29,
-  mass: 1.05,
-  restDelta: 0.0005,
-  restSpeed: 0.0005,
-};
