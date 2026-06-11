@@ -22,10 +22,11 @@ html, body {
 
 /* Smooth Scrolling with proximity snap for fluid experience */
 .snap-container {
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y none; /* Free bouncy native scroll momentum */
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  overscroll-behavior-y: contain;
 }
 
 .snap-container::-webkit-scrollbar {
@@ -62,6 +63,17 @@ html, body {
 
 .letter-section:nth-child(odd) .letter {
   font-size: clamp(4.8rem, 23vw, 8.5rem);
+}
+
+/* Crisp high-quality rendering for images and transforms to fix low-res feel */
+.yt-thumb,
+.vinyl,
+.glass-panel,
+.particles-canvas {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 /* Visually impressive continuously shifting refractive liquid background */

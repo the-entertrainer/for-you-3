@@ -14,9 +14,10 @@ interface LetterProps {
 
 const LIQUID_SPRING = {
   type: "spring" as const,
-  stiffness: 100,
-  damping: 15,
-  mass: 1.1,
+  stiffness: 200,
+  damping: 14,
+  mass: 0.85,
+  // Bouncy with liquid-like dampening (viscous overshoot then settle smoothly)
 };
 
 export function Letter({ item, index, isExpanded, onToggle }: LetterProps) {
@@ -61,14 +62,21 @@ export function Letter({ item, index, isExpanded, onToggle }: LetterProps) {
   return (
     <div className="letter-section relative">
       <div className="w-full max-w-[420px] px-6">
-        {/* The Letter - Big, elegant, cinematic */}
-        <button
+        {/* The Letter - Big, elegant, cinematic with bouncy Framer motion */}
+        <motion.button
+          ref={letterRef}
           onClick={handleTap}
           className="letter block w-full text-center focus:outline-none"
           aria-expanded={localExpanded}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.96 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          initial={{ scale: 0.95, opacity: 0.7 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={LIQUID_SPRING}
         >
           {item.letter}
-        </button>
+        </motion.button>
 
         {/* Expanded Glass Card - only when active */}
         <AnimatePresence>

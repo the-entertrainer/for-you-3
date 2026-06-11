@@ -31,9 +31,9 @@ export function SongWidget({ song, youtubeUrl }: SongWidgetProps) {
         {/* Thumbnail with 3D glassy overlay */}
         <div 
           onClick={handlePlay}
-          className="relative mb-4 aspect-video w-full overflow-hidden rounded-xl cursor-pointer border border-white/10 group-hover:border-white/20 transition-all"
+          className="yt-thumb relative mb-4 aspect-video w-full overflow-hidden rounded-xl cursor-pointer border border-white/10 group-hover:border-white/20 transition-all"
           style={{
-            backgroundImage: `url(https://img.youtube.com/vi/${videoId}/hqdefault.jpg)`,
+            backgroundImage: `url(https://img.youtube.com/vi/${videoId}/maxresdefault.jpg)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             transform: 'perspective(1000px) rotateX(2deg)',
