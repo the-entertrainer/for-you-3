@@ -1,33 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# For You <3
 
-## Getting Started
+A mobile-native (9:16) **Dark Glassy Liquid** web experience built for NIKITA.
 
-First, run the development server:
+- Vertical stack of **N-I-K-I-T-A** — every letter is a fully state-managed interactive component.
+- Tap a letter → it expands horizontally into a beautiful glassmorphic card.
+- The card reveals the poetic phrase + an ultra-immersive **Song Widget**.
+- The widget uses the song artwork as its background **and** a real-time **WebGL refractive glass shader** (glass index 1.52 + strong -100 magnification lens + liquid micro-wobble).
+- All animations use hand-calibrated Framer Motion springs (soft, high-damping, viscous liquid physics).
+- 100dvh × 100vw forced viewport — no browser toolbar clipping.
+- Official `jiosaavn://song/[ID]` deep links with robust timeout + web fallback.
+
+Optimized for Vercel (vercel.json + performance headers included).
+
+## Tech highlights
+- Next.js 16 App Router + TypeScript
+- Framer Motion (liquid springs)
+- Custom high-performance WebGL + GLSL refraction/magnification shader
+- Hand-crafted multi-layer CSS glassmorphism
+- Sonner toasts for deep-link UX
+
+## Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 — the experience is designed to feel like a native 9:16 mobile app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+vercel
+```
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The included `vercel.json` sets proper security headers and long-lived image caching.
 
 ## Deploy on Vercel
 

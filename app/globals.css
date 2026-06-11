@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Dark Glassy Liquid Theme */
+  --bg: #050505;
+  --glass-bg: rgba(255, 255, 255, 0.065);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-highlight: rgba(255, 255, 255, 0.35);
+  --liquid-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --accent: #a5b4fc;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg);
+  --color-foreground: #ededed;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  background: var(--bg);
+  color: #ededed;
+  font-family: var(--font-geist-sans);
+  overscroll-behavior: none;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* === LIQUID GLASS UTILITIES === */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--liquid-shadow);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass:hover {
+  border-color: var(--glass-highlight);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
+}
+
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.12) 0%,
+    rgba(255,255,255,0.02) 35%,
+    rgba(255,255,255,0.08) 65%,
+    rgba(255,255,255,0.01) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Strong refractive highlight edge */
+.glass-edge {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(0,0,0,0.4),
+    0 0 0 1px rgba(255,255,255,0.06);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* === VIEWPORT & MOBILE NATIVE === */
+.app-container {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* === LETTER STYLES === */
+.letter {
+  font-size: clamp(4.5rem, 22vw, 7.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
+  font-feature-settings: "tnum";
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.letter:active {
+  transform: scale(0.96);
+}
+
+/* === LIQUID MOTION HELPERS === */
+.liquid-expand {
+  will-change: width, transform;
+}
+
+/* Song widget immersive bg */
+.song-widget {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+.song-widget::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.1) 0%,
+    rgba(0,0,0,0.55) 45%,
+    rgba(0,0,0,0.85) 100%
+  );
+  z-index: 1;
+}
+
+/* === SHADER CANVAS (refractive overlay) === */
+.shader-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0.9;
 }
