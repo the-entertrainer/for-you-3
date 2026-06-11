@@ -3,10 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SongWidget } from "@/components/SongWidget";
-import type { EnhancedNikitaItem } from "@/types";
+import type { NikitaItem } from "@/data/content";
 
 interface LetterProps {
-  item: EnhancedNikitaItem;
+  item: NikitaItem;
   index: number;
   isExpanded: boolean;
   onToggle: () => void;
@@ -14,10 +14,10 @@ interface LetterProps {
 
 const LIQUID_SPRING = {
   type: "spring" as const,
-  stiffness: 200,
-  damping: 14,
-  mass: 0.85,
-  // Bouncy with liquid-like dampening (viscous overshoot then settle smoothly)
+  stiffness: 100,
+  damping: 15,
+  mass: 1,
+  // Low stiffness, moderate damping for realistic 'liquid' easing effect
 };
 
 export function Letter({ item, index, isExpanded, onToggle }: LetterProps) {
