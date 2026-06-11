@@ -17,41 +17,47 @@ export function useDeepLink() {
       return;
     }
 
-    // Robust custom URI scheme for JioSaavn native deep link
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    let deepLink: string;
+    const isAndroid = /Android/i.test(navigator.userAgent || "");
 
-    if (isAndroid) {
-      // Android intent for reliable native app launch
-      deepLink = `intent://song/${songId}#Intent;scheme=jiosaavn;package=com.jio.media.jiobeats;end`;
-    } else {
-      // iOS / general jiosaavn:// scheme
-      deepLink = `jiosaavn://song/${songId}`;
-    }
+    // Try multiple native URI schemes for better compatibility
+    const attempts = [
+      `jiosaavn://song/${songId}`,
+      `jiosaavn://song?id=${songId}`,
+      isAndroid ? `intent://song/${songId}#Intent;scheme=jiosaavn;package=com.jio.media.jiobeats;end` : null,
+    ].filter(Boolean) as string[];
 
-    // Fire the native deep link first (onClick handler style)
-    window.location.href = deepLink;
+    // Fire the first (most common) native deep link
+    window.location.href = attempts[0];
 
-    // Fallback timer: 1500ms
+    // Fallback timer (1500ms as requested)
     const FALLBACK_DELAY = 1500;
     const timer = setTimeout(() => {
-      // If still visible, the native app did not take over
       if (document.visibilityState === "visible") {
+        // Still in browser -> fallback to web URL
         window.open(webUrl, "_blank", "noopener,noreferrer");
-        toast.info("Opened in browser", {
-          description: "JioSaavn app not detected or not installed",
+        toast.info("Opened web version", {
+          description: "Native app did not respond or is not installed",
         });
       }
     }, FALLBACK_DELAY);
 
-    // Optional: clear if page hides quickly (app opened)
-    const handleVisibility = () => {
+    // Listen for visibility change to clear timer if app launches
+    const onVisibility = () => {
       if (document.visibilityState === "hidden") {
         clearTimeout(timer);
-        document.removeEventListener("visibilitychange", handleVisibility);
       }
+      document.removeEventListener("visibilitychange", onVisibility);
     };
-    document.addEventListener("visibilitychange", handleVisibility, { once: true });
+    document.addEventListener("visibilitychange", onVisibility, { once: true });
+
+    // For some browsers, try secondary scheme after small delay if first fails silently
+    if (attempts.length > 1) {
+      setTimeout(() => {
+        if (document.visibilityState === "visible") {
+          window.location.href = attempts[1];
+        }
+      }, 300);
+    }
   }, []);
 
   return { openSong };

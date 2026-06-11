@@ -20,7 +20,7 @@ html, body {
   overscroll-behavior: none;
 }
 
-/* Scroll Snapping for fluid mobile swiping */
+/* Scroll Snapping for fluid mobile swiping + dynamic effects */
 .snap-container {
   scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
@@ -39,27 +39,55 @@ html, body {
   align-items: center;
   justify-content: center;
   position: relative;
+  transition: filter 0.3s ease;
 }
 
-/* Subtle continuously shifting refractive background gradient */
+/* Dynamic scroll effects: letters blur and scale slightly when not centered */
+.letter-section:not(:has(.glass)) {
+  filter: blur(0.5px) brightness(0.95);
+}
+
+.letter-section:has(.glass) {
+  filter: none;
+  z-index: 10;
+}
+
+/* Scroll-driven dynamic font size for letters (more impressive on mobile swipe) */
+.letter {
+  font-size: clamp(4.8rem, 24vw, 8.5rem);
+  transition: font-size 0.2s ease, font-variation-settings 0.3s ease;
+}
+
+.letter-section:nth-child(odd) .letter {
+  font-size: clamp(5rem, 25vw, 9rem);
+}
+
+/* Visually impressive continuously shifting refractive liquid background */
 .shifting-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
   background: 
-    radial-gradient(circle at 20% 30%, rgba(192, 163, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(180, 140, 255, 0.06) 0%, transparent 50%),
-    linear-gradient(145deg, #0a0a0f 0%, #12121a 100%);
-  background-size: 200% 200%;
-  animation: refractive-shift 25s ease-in-out infinite;
+    radial-gradient(circle at 20% 30%, rgba(192, 163, 255, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(180, 140, 255, 0.09) 0%, transparent 55%),
+    conic-gradient(from 180deg at 50% 50%, #0a0a0f, #12121a, #0a0a0f);
+  background-size: 220% 220%, 180% 180%, 100% 100%;
+  animation: refractive-shift 28s ease-in-out infinite, 
+             hue-shift 45s linear infinite;
+  filter: contrast(1.05) saturate(1.1);
 }
 
 @keyframes refractive-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%, 100% { background-position: 0% 50%, 100% 50%, 0 0; }
+  50% { background-position: 100% 50%, 0% 50%, 0 0; }
 }
 
-/* Premium Modern Typography with Reactive Variable Fonts */
+@keyframes hue-shift {
+  0%, 100% { filter: contrast(1.05) saturate(1.1) hue-rotate(0deg); }
+  50% { filter: contrast(1.08) saturate(1.15) hue-rotate(8deg); }
+}
+
+/* Premium Modern Typography with Reactive Variable Fonts - Visually Impressive */
 .letter {
   font-family: var(--font-playfair);
   font-size: clamp(4.8rem, 24vw, 8.5rem);
@@ -67,23 +95,40 @@ html, body {
   letter-spacing: -0.065em;
   line-height: 0.72;
   color: #f5f5f7;
-  text-shadow: 0 12px 40px rgba(0, 0, 0, 0.65);
+  text-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.65),
+    0 2px 8px rgba(192, 163, 255, 0.15);
   transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), 
-              font-variation-settings 0.4s ease;
+              font-variation-settings 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              text-shadow 0.3s ease;
   user-select: none;
   font-feature-settings: "kern" on, "liga" on, "tnum" on;
+  will-change: font-variation-settings;
 }
 
-/* Reactive: Dynamic font-variation (weight, width, optical size) reacting to interaction, expansion and scroll */
+/* Dynamic reactive font variation on scroll + expansion (wdth for width, opsz for optical size) */
 .letter:active,
 .letter-section:has(.glass) .letter {
-  transform: scale(0.97);
-  font-variation-settings: "wght" 780, "wdth" 105, "opsz" 85;
+  transform: scale(0.96) translateY(-4px);
+  font-variation-settings: "wght" 820, "wdth" 108, "opsz" 92;
+  text-shadow: 
+    0 18px 50px rgba(0, 0, 0, 0.75),
+    0 4px 12px rgba(192, 163, 255, 0.25);
 }
 
-/* Subtle scroll-reactive font variation (applied via JS on .letter) */
+/* Scroll position reactive (JS sets inline style with wdth/opsz for impressive dynamic feel) */
 .letter.scroll-reactive {
-  font-variation-settings: "wght" 720, "wdth" 98, "opsz" 72;
+  font-variation-settings: "wght" 680, "wdth" 92, "opsz" 68;
+}
+
+/* Subtle breathing animation for letters when idle */
+.letter {
+  animation: letter-breathe 8s ease-in-out infinite;
+}
+
+@keyframes letter-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
 }
 
 .expanded-text {
@@ -234,17 +279,25 @@ em, .italic {
   inherits: false;
 }
 
-/* Animated Vinyl Record Widget */
+/* Visually impressive Animated Vinyl Record Widget (3D tilt + reactive) */
 .vinyl-container {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 9999px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 
-              inset 0 0 60px rgba(0,0,0,0.8),
-              inset 0 0 20px rgba(255,255,255,0.15);
-  background: #111;
+  box-shadow: 
+    0 20px 60px -10px rgba(0,0,0,0.7),
+    0 0 0 12px #0a0a0f,
+    inset 0 0 80px rgba(0,0,0,0.85),
+    inset 0 0 30px rgba(255,255,255,0.2);
+  background: #0a0a0f;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+}
+
+.vinyl-container:hover {
+  transform: rotateX(8deg) rotateY(8deg) scale(1.03);
 }
 
 .vinyl {
@@ -253,8 +306,9 @@ em, .italic {
   background-size: cover;
   background-position: center;
   border-radius: 9999px;
-  animation: spin 4s linear infinite paused;
-  transition: filter 0.3s ease;
+  animation: spin 3.8s linear infinite paused;
+  transition: filter 0.3s ease, transform 0.3s ease;
+  box-shadow: inset 0 0 120px rgba(0,0,0,0.6);
 }
 
 .vinyl.playing {
@@ -264,20 +318,23 @@ em, .italic {
 .vinyl::before {
   content: '';
   position: absolute;
-  inset: 18%;
+  inset: 16%;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(0,0,0,0.75) 20%, transparent 70%);
-  box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+  background: radial-gradient(circle at 40% 30%, rgba(255,255,255,0.15) 0%, transparent 50%),
+              radial-gradient(circle, rgba(0,0,0,0.8) 15%, transparent 65%);
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.95);
 }
 
 .vinyl::after {
   content: '';
   position: absolute;
-  inset: 42%;
+  inset: 38%;
   border-radius: 9999px;
-  background: #222;
-  box-shadow: 0 0 0 8px #111,
-              0 0 0 12px #333;
+  background: #111;
+  box-shadow: 
+    0 0 0 10px #0a0a0f,
+    0 0 0 16px #222,
+    inset 0 0 20px rgba(255,255,255,0.1);
 }
 
 /* Pulsing blurred artwork background */
