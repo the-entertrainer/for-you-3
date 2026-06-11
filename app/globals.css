@@ -20,9 +20,10 @@ html, body {
   overscroll-behavior: none;
 }
 
-/* Scroll Snapping for fluid mobile swiping + dynamic effects */
+/* Smooth Scrolling with proximity snap for fluid experience */
 .snap-container {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -33,33 +34,34 @@ html, body {
 
 .letter-section {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
   min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: filter 0.3s ease;
+  transition: filter 0.4s ease, transform 0.4s ease;
 }
 
-/* Dynamic scroll effects: letters blur and scale slightly when not centered */
-.letter-section:not(:has(.glass)) {
-  filter: blur(0.5px) brightness(0.95);
+/* Dynamic scroll effects + 3D depth */
+.letter-section:not(:has(.glass-panel)) {
+  filter: blur(0.8px) brightness(0.92);
+  transform: scale(0.985);
 }
 
-.letter-section:has(.glass) {
+.letter-section:has(.glass-panel) {
   filter: none;
   z-index: 10;
+  transform: scale(1);
 }
 
-/* Scroll-driven dynamic font size for letters (more impressive on mobile swipe) */
+/* Scroll-driven dynamic font size for impressive letters */
 .letter {
-  font-size: clamp(4.8rem, 24vw, 8.5rem);
-  transition: font-size 0.2s ease, font-variation-settings 0.3s ease;
+  font-size: clamp(4.5rem, 22vw, 8rem);
+  transition: font-size 0.25s ease, font-variation-settings 0.35s ease;
 }
 
 .letter-section:nth-child(odd) .letter {
-  font-size: clamp(5rem, 25vw, 9rem);
+  font-size: clamp(4.8rem, 23vw, 8.5rem);
 }
 
 /* Visually impressive continuously shifting refractive liquid background */
@@ -87,48 +89,47 @@ html, body {
   50% { filter: contrast(1.08) saturate(1.15) hue-rotate(8deg); }
 }
 
-/* Premium Modern Typography with Reactive Variable Fonts - Visually Impressive */
+/* Sleek Modern Typography with 3D Reactive Effects */
 .letter {
   font-family: var(--font-playfair);
-  font-size: clamp(4.8rem, 24vw, 8.5rem);
+  font-size: clamp(4.5rem, 22vw, 8rem);
   font-weight: 700;
-  letter-spacing: -0.065em;
-  line-height: 0.72;
-  color: #f5f5f7;
+  letter-spacing: -0.07em;
+  line-height: 0.68;
+  color: #f8f8f8;
   text-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.65),
-    0 2px 8px rgba(192, 163, 255, 0.15);
-  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), 
-              font-variation-settings 0.35s cubic-bezier(0.23, 1, 0.32, 1),
-              text-shadow 0.3s ease;
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 4px 15px rgba(192, 163, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.23, 1.0, 0.32, 1);
   user-select: none;
   font-feature-settings: "kern" on, "liga" on, "tnum" on;
-  will-change: font-variation-settings;
+  position: relative;
+  z-index: 1;
 }
 
-/* Dynamic reactive font variation on scroll + expansion (wdth for width, opsz for optical size) */
+/* 3D tilt + glow on interaction (impressive on desktop hover, active on mobile) */
 .letter:active,
-.letter-section:has(.glass) .letter {
-  transform: scale(0.96) translateY(-4px);
-  font-variation-settings: "wght" 820, "wdth" 108, "opsz" 92;
+.letter-section:has(.glass-panel) .letter {
+  transform: perspective(800px) rotateX(8deg) rotateY(-6deg) scale(0.94) translateY(-8px);
   text-shadow: 
-    0 18px 50px rgba(0, 0, 0, 0.75),
-    0 4px 12px rgba(192, 163, 255, 0.25);
+    0 30px 80px rgba(0, 0, 0, 0.9),
+    0 8px 25px rgba(192, 163, 255, 0.4);
+  filter: brightness(1.1);
 }
 
-/* Scroll position reactive (JS sets inline style with wdth/opsz for impressive dynamic feel) */
+/* Scroll-reactive dynamic font (JS driven for width/optical size) */
 .letter.scroll-reactive {
-  font-variation-settings: "wght" 680, "wdth" 92, "opsz" 68;
+  font-variation-settings: "wght" 650, "wdth" 88, "opsz" 65;
 }
 
-/* Subtle breathing animation for letters when idle */
+/* Elegant breathing + subtle 3D float for letters */
 .letter {
-  animation: letter-breathe 8s ease-in-out infinite;
+  animation: letter-float 7s ease-in-out infinite;
 }
 
-@keyframes letter-breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.015); }
+@keyframes letter-float {
+  0%, 100% { transform: translateY(0) rotateX(0deg); }
+  50% { transform: translateY(-6px) rotateX(2deg); }
 }
 
 .expanded-text {
@@ -188,89 +189,99 @@ em, .italic {
   line-height: 1.45;
 }
 
-/* Liquid Glass Card */
-.glass {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--liquid-shadow);
-  backdrop-filter: blur(28px) saturate(200%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
-  border-radius: 24px;
+/* Sleek Glassy 3D Panels - Modern Aesthetic with Depth, Glow & 3D Effects */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 25px 80px -15px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 10px 30px -10px rgba(192, 163, 255, 0.15);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border-radius: 28px;
   position: relative;
   overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.23, 1.0, 0.32, 1);
+  transform-style: preserve-3d;
 }
 
-.glass::before {
+/* Multi-layer glassy depth + subtle 3D bevel */
+.glass-panel::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255,255,255,0.12) 0%,
-    rgba(255,255,255,0.02) 30%,
-    rgba(255,255,255,0.08) 70%,
-    rgba(255,255,255,0.01) 100%
-  );
+  background: 
+    linear-gradient(145deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 35%, transparent 65%),
+    linear-gradient(225deg, rgba(255,255,255,0.06) 0%, transparent 40%);
   pointer-events: none;
   z-index: 1;
+  border-radius: inherit;
 }
 
-/* Enhanced typography inside glass cards for better visual hierarchy */
-.glass p {
-  font-feature-settings: "kern" on, "liga" on;
+/* Inner glow for premium frosted glass */
+.glass-panel::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 50%);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
 }
 
-.glass .label {
-  font-family: var(--font-space-grotesk);
-  letter-spacing: 0.08em;
+/* 3D hover/expansion effect - impressive tilt and lift */
+.letter-section:has(.glass-panel) .glass-panel {
+  transform: perspective(1200px) rotateX(6deg) rotateY(-4deg) translateY(-12px) scale(1.01);
+  box-shadow: 
+    0 40px 120px -20px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 15px 40px -5px rgba(192, 163, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Subtle font animation on card open (reactive typography pop) */
-.glass.expanded p {
-  animation: font-open-pop 650ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+/* Intense neon glow effects on expansion */
+.glass-panel.expanded {
+  box-shadow: 
+    0 40px 120px -20px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 0 60px -10px rgba(192, 163, 255, 0.4),
+    0 15px 40px -5px rgba(192, 163, 255, 0.3);
 }
 
-@keyframes font-open-pop {
-  from {
-    font-variation-settings: "wght" 400, "wdth" 95;
-    letter-spacing: -0.03em;
-    opacity: 0.6;
-  }
-  to {
-    font-variation-settings: "wght" 500, "wdth" 100;
-    letter-spacing: -0.015em;
-    opacity: 1;
-  }
-}
-
-/* Glowing tracing border on expansion */
+/* Glowing border trace (enhanced for modern glow) */
 .glowing-border {
   position: absolute;
   inset: -1px;
-  border-radius: 25px;
+  border-radius: 29px;
   background: conic-gradient(
     from var(--angle, 0deg),
     transparent 0deg,
-    var(--accent) 80deg,
-    transparent 160deg
+    #c0a3ff 70deg,
+    #a78bfa 140deg,
+    transparent 210deg
   );
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
   z-index: 0;
-  animation: border-trace 2.5s linear infinite;
+  animation: border-trace 3s linear infinite;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   padding: 1px;
 }
 
 .expanded .glowing-border {
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 @keyframes border-trace {
-  to {
-    --angle: 360deg;
-  }
+  to { --angle: 360deg; }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
 
 @property --angle {

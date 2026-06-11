@@ -81,7 +81,7 @@ export function Letter({ item, index, isExpanded, onToggle }: LetterProps) {
               transition={LIQUID_SPRING}
               className="mt-6"
             >
-              <div className="glass expanded relative p-6 text-left">
+              <div className="glass-panel expanded relative p-6 text-left">
                 {/* Gentle tracing glowing border */}
                 <div className="glowing-border" />
 
@@ -95,9 +95,7 @@ export function Letter({ item, index, isExpanded, onToggle }: LetterProps) {
                   <div className="mt-6">
                     <SongWidget
                       song={item.song}
-                      artworkUrl={item.artwork}
-                      webUrl={item.url}
-                      songId={item.songId}
+                      youtubeUrl={item.youtubeUrl}
                     />
                   </div>
                 </div>
