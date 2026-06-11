@@ -6,9 +6,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { songId: string } }
+  { params }: { params: Promise<{ songId: string }> }
 ) {
-  const { songId } = params;
+  const { songId } = await params;
 
   if (!songId) {
     return NextResponse.json({ error: 'Song ID required' }, { status: 400 });
